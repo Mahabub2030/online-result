@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Sample Online Result</title>
+  
+  <!-- Favicon -->
+  <link href="https://erp.uttarauniversity.edu.bd/temp/assets/img/favicon.png" rel="icon">
+  
+  <!-- Bootstrap + Icons -->
+  <link href="https://erp.uttarauniversity.edu.bd/temp/assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://erp.uttarauniversity.edu.bd/temp/assets/css/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="https://erp.uttarauniversity.edu.bd/temp/assets/css/toastr.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://erp.uttarauniversity.edu.bd/temp/assets/css/select2.min.css" />
+
+  <style>
+    .blink { animation: blinker 3.5s linear infinite; color: maroon; }
+    @keyframes blinker { 50% { opacity: 0; } }
+    .card-header { padding: 5px 5px !important; border-radius: 0px; }
+    .bg-secondary { background: #E3E5EC !important; }
+    .result-card { display: none; margin-top:20px; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="container bg-light">
+    <section class="d-flex flex-column align-items-center justify-content-center">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            
+            <!-- Logo -->
+            <div class="text-center mt-4 mb-2">
+              <img src="https://erp.uttarauniversity.edu.bd/temp/assets/img/uu_brand_logo.png" style="height: 80px" alt="logo">
+            </div>
+            
+            <h4 class="text-center font-weight-bold">Sample Online Result</h4>
+            
+            <!-- Search Form -->
+            <div class="card">
+              <div class="card-header bg-secondary">Provide Information</div>
+              <div class="card-body">
+                <form id="resultForm" class="row mt-2 g-3">
+                  <div class="col-md-3">
+                    <label class="form-label">Student ID <span class="required-mask">*</span></label>
+                    <input type="text" maxlength="15" class="form-control text-uppercase" id="sid" required />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Date of Birth <span class="required-mask">*</span></label>
+                    <input type="date" class="form-control" id="dob" required />
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Academic Year <span class="required-mask">*</span></label>
+                    <select class="form-select" id="acyear" required>
+                      <option value="">-- Select --</option>
+                      <option value="2026">2026</option>
+                      <option value="2025">2025</option>
+                      <option value="2024">2024</option>
+                      <option value="2023">2023</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label">Semester <span class="required-mask">*</span></label>
+                    <select class="form-select" id="semid" required>
+                      <option value="">-- Select --</option>
+                      <option value="1">Spring</option>
+                      <option value="2">Summer</option>
+                      <option value="3">Fall</option>
+                    </select>
+                  </div>
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary float-right">Search</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Result Card -->
+            <div class="card result-card" id="resultCard">
+              <div class="card-header bg-secondary">Student Result</div>
+              <div class="card-body">
+                <h5 id="studentName"></h5>
+                <p><strong>Student ID:</strong> <span id="studentId"></span></p>
+                <p><strong>Academic Year:</strong> <span id="year"></span>, 
+                   <strong>Semester:</strong> <span id="semester"></span></p>
+                
+                <table class="table table-bordered">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Course Code</th>
+                      <th>Course Title</th>
+                      <th>Grade</th>
+                      <th>GPA</th>
+                    </tr>
+                  </thead>
+                  <tbody id="resultTable">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="col-md-12 mt-4" style="background:#1D45B5">
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <h3 style="font-weight:bold;color:wheat;font-size:16px;padding:15px 0px 0px 10px">Important Links</h3>
+                  <ul class="nav flex-column">
+                    <li class="nav-item mt-2"><a href="#" class="nav-link text-white" style="font-size:12px"><i class="bi bi-chevron-double-right"></i> Official Website</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white" style="font-size:12px"><i class="bi bi-chevron-double-right"></i> Facebook Page</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-6 mb-2">
+                  <h3 style="font-weight:bold;color:wheat;font-size:16px;padding:15px 0px 0px 8px">Important Contacts</h3>
+                  <ul class="nav flex-column">
+                    <li class="nav-item mt-2"><a href="mailto:info@example.com" class="nav-link text-white" style="font-size:12px"><i class="bi bi-envelope"></i> info@example.com</a></li>
+                    <li class="nav-item"><a href="tel:+880123456789" class="nav-link text-white" style="font-size:12px"><i class="bi bi-phone"></i> +880123456789</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- JS -->
+<script src="https://erp.uttarauniversity.edu.bd/temp/assets/js/jquery.min.js"></script>
+<script src="https://erp.uttarauniversity.edu.bd/temp/assets/js/bootstrap.bundle.min.js"></script>
+<script src="https://erp.uttarauniversity.edu.bd/temp/assets/js/select2.min.js"></script>
+<script src="https://erp.uttarauniversity.edu.bd/temp/assets/js/toastr.min.js"></script>
+
+<script>
+  $('.form-select').select2();
+  toastr.options = { "closeButton": true, "progressBar": true };
+
+  // Mock Student Database
+  const studentDB = {
+    "UU1234": {
+      name: "Mahabub Alam",
+      dob: "2000-01-01",
+      results: [
+        { code: "CSE101", title: "Introduction to Programming", grade: "A", gpa: 4.0 },
+        { code: "CSE102", title: "Data Structures", grade: "B+", gpa: 3.5 },
+        { code: "CSE103", title: "Database Systems", grade: "A-", gpa: 3.7 }
+      ]
+    },
+    "UU5678": {
+      name: "Abdullah Samir",
+      dob: "1999-05-10",
+      results: [
+        { code: "ENG101", title: "English Composition", grade: "A", gpa: 4.0 },
+        { code: "MAT101", title: "Calculus I", grade: "B", gpa: 3.0 }
+      ]
+    }
+  };
+
+  // Form Submit
+  $("#resultForm").on("submit", function(e){
+    e.preventDefault();
+    let sid = $("#sid").val().trim().toUpperCase();
+    let dob = $("#dob").val();
+    let year = $("#acyear").val();
+    let semid = $("#semid option:selected").text();
+
+    if(studentDB[sid] && studentDB[sid].dob === dob){
+      let student = studentDB[sid];
+      $("#studentName").text(student.name);
+      $("#studentId").text(sid);
+      $("#year").text(year);
+      $("#semester").text(semid);
+
+      let rows = "";
+      student.results.forEach(r=>{
+        rows += `<tr><td>${r.code}</td><td>${r.title}</td><td>${r.grade}</td><td>${r.gpa}</td></tr>`;
+      });
+      $("#resultTable").html(rows);
+      $("#resultCard").slideDown();
+      toastr.success("Result found for Student ID: " + sid);
+    } else {
+      $("#resultCard").hide();
+      toastr.error("Student information not found");
+    }
+  });
+</script>
+
+</body>
+</html>
