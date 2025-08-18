@@ -135,7 +135,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-<script>
+<!-- <script>
 $(document).ready(function(){
   $('.form-select').select2();
   toastr.options = { "closeButton": true, "progressBar": true };
@@ -201,6 +201,74 @@ $(document).ready(function(){
 
     if(studentDB[sid] && studentDB[sid].dob === dob){
       let student = studentDB[sid];
+      $("#studentName").text(student.name);
+      $("#studentId").text(sid);
+      $("#year").text(year);
+      $("#semester").text(semid);
+
+      let rows = "";
+      for(let yr in student.results){
+        rows += `<tr class="table-secondary"><td colspan="4"><strong>${yr}</strong></td></tr>`;
+        student.results[yr].forEach(r=>{
+          rows += `<tr><td>${r.code}</td><td>${r.title}</td><td>${r.grade}</td><td>${r.gpa}</td></tr>`;
+        });
+      }
+
+      if(student.cgpa){
+        rows += `<tr class="table-info">
+                   <td colspan="3" class="text-end"><strong>CGPA</strong></td>
+                   <td><strong>${student.cgpa}</strong></td>
+                 </tr>`;
+      }
+
+      $("#resultTable").html(rows);
+      $("#resultCard").slideDown();
+      toastr.success("Result found for Student ID: " + sid);
+    } else {
+      $("#resultCard").hide();
+      toastr.error("Student information not found");
+    }
+  });
+});
+</script> -->
+<script>
+$(document).ready(function(){
+  $('.form-select').select2({ width: '100%' });
+  toastr.options = { "closeButton": true, "progressBar": true };
+
+  const studentDB = {
+    "2201381015": {
+      name: "Mahabub Alam",
+      dob: "1998-05-06",
+      results: { /* same as before */ },
+      cgpa: 2.96
+    },
+    "UU5678": {
+      name: "Abdullah Samir",
+      dob: "1999-05-10",
+      results: { /* same as before */ },
+      cgpa: 3.5
+    }
+  };
+
+  // Normalize date to YYYY-MM-DD
+  function normalizeDate(dateStr){
+    const d = new Date(dateStr);
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const dd = String(d.getDate()).padStart(2,'0');
+    const yyyy = d.getFullYear();
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  $("#resultForm").on("submit", function(e){
+    e.preventDefault();
+    const sid = $("#sid").val().trim().toUpperCase();
+    const dobInput = normalizeDate($("#dob").val());
+    const year = $("#acyear option:selected").text();
+    const semid = $("#semid option:selected").text();
+
+    if(studentDB[sid] && normalizeDate(studentDB[sid].dob) === dobInput){
+      const student = studentDB[sid];
       $("#studentName").text(student.name);
       $("#studentId").text(sid);
       $("#year").text(year);
