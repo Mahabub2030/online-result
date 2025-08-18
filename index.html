@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title> Online Result</title>
+  <title>Online Result</title>
   
   <!-- Favicon -->
   <link href="https://erp.uttarauniversity.edu.bd/temp/assets/img/favicon.png" rel="icon">
   
-  <!-- Bootstrap + Icons -->
-  <link href="https://erp.uttarauniversity.edu.bd/temp/assets/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://erp.uttarauniversity.edu.bd/temp/assets/css/bootstrap-icons.css" rel="stylesheet">
+  <!-- Bootstrap + Icons (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Custom CSS -->
-  <link href="https://erp.uttarauniversity.edu.bd/temp/assets/css/toastr.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://erp.uttarauniversity.edu.bd/temp/assets/css/select2.min.css" />
+  <!-- Select2 + Toastr (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
 
   <style>
     .blink { animation: blinker 3.5s linear infinite; color: maroon; }
@@ -37,7 +37,7 @@
               <img src="https://erp.uttarauniversity.edu.bd/temp/assets/img/uu_brand_logo.png" style="height: 80px" alt="logo">
             </div>
             
-            <h4 class="text-center font-weight-bold"> Online Result</h4>
+            <h4 class="text-center font-weight-bold">Online Result</h4>
             
             <!-- Search Form -->
             <div class="card">
@@ -69,7 +69,7 @@
                       <option value="1">Spring</option>
                       <option value="2">Summer</option>
                       <option value="3">Fall</option>
-                      <option value="3">Final Year</option>
+                      <option value="4">Final Year</option>
                     </select>
                   </div>
                   <div class="col-md-12">
@@ -97,8 +97,7 @@
                       <th>GPA</th>
                     </tr>
                   </thead>
-                  <tbody id="resultTable">
-                  </tbody>
+                  <tbody id="resultTable"></tbody>
                 </table>
               </div>
             </div>
@@ -130,199 +129,17 @@
   </div>
 </main>
 
-<!-- JS -->
-<script src="https://erp.uttarauniversity.edu.bd/temp/assets/js/jquery.min.js"></script>
-<script src="https://erp.uttarauniversity.edu.bd/temp/assets/js/bootstrap.bundle.min.js"></script>
-<script src="https://erp.uttarauniversity.edu.bd/temp/assets/js/select2.min.js"></script>
-<script src="https://erp.uttarauniversity.edu.bd/temp/assets/js/toastr.min.js"></script>
-<script src="./index.js"></script>
-<!-- <script>
-  $('.form-select').select2();
-  toastr.options = { "closeButton": true, "progressBar": true };
+<!-- JS (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-  // Mock Student Database
-  const studentDB = {
-    "2201381015": {
-      name: "Mahabub Alam",
-      dob: "1998-05-06",
-      results: [
-        // 1st Year
-        { code: "CSE101", title: "Introduction to Computer Science", grade: "B", gpa: 3.0 },
-        { code: "MTH101", title: "Calculus & Linear Algebra", grade: "C+", gpa: 2.5 },
-        { code: "PHY101", title: "Physics I", grade: "B-", gpa: 2.75 },
-
-        { code: "CSE102", title: "Structured Programming", grade: "B+", gpa: 3.25 },
-        { code: "MTH102", title: "Differential Equations", grade: "C", gpa: 2.25 },
-        { code: "ENG101", title: "English Composition", grade: "B", gpa: 3.0 },
-
-        // 2nd Year
-        { code: "CSE201", title: "Data Structures", grade: "B+", gpa: 3.25 },
-        { code: "CSE202", title: "Digital Logic Design", grade: "B", gpa: 3.0 },
-        { code: "STA201", title: "Probability & Statistics", grade: "C+", gpa: 2.5 },
-
-        { code: "CSE203", title: "Object-Oriented Programming", grade: "B", gpa: 3.0 },
-        { code: "CSE204", title: "Computer Architecture", grade: "B-", gpa: 2.75 },
-        { code: "ECO201", title: "Economics", grade: "C+", gpa: 2.5 },
-
-        // 3rd Year
-        { code: "CSE301", title: "Algorithm Design & Analysis", grade: "B+", gpa: 3.25 },
-        { code: "CSE302", title: "Operating Systems", grade: "B", gpa: 3.0 },
-        { code: "CSE303", title: "Database Systems", grade: "B-", gpa: 2.75 },
-
-        { code: "CSE304", title: "Software Engineering", grade: "B", gpa: 3.0 },
-        { code: "CSE305", title: "Computer Networks", grade: "C+", gpa: 2.5 },
-        { code: "CSE306", title: "Artificial Intelligence", grade: "B-", gpa: 2.75 },
-
-        // 4th Year
-        { code: "CSE401", title: "Compiler Design", grade: "B", gpa: 3.0 },
-        { code: "CSE402", title: "Machine Learning", grade: "B+", gpa: 3.25 },
-        { code: "CSE403", title: "Web Technologies", grade: "B-", gpa: 2.75 },
-
-        { code: "CSE404", title: "Final Year Project", grade: "B", gpa: 3.0 },
-        { code: "CSE405", title: "Cyber Security", grade: "C+", gpa: 2.5 },
-      ],
-      cgpa: 2.96
-    
-      
-    },
-    "UU5678": {
-      name: "Abdullah Samir",
-      dob: "1999-05-10",
-      results: [
-        { code: "ENG101", title: "English Composition", grade: "A", gpa: 4.0 },
-        { code: "MAT101", title: "Calculus I", grade: "B", gpa: 3.0 }
-      ]
-    }
-  };
-
-  // Form Submit
-  $("#resultForm").on("submit", function(e){
-    e.preventDefault();
-    let sid = $("#sid").val().trim().toUpperCase();
-    let dob = $("#dob").val();
-    let year = $("#acyear").val();
-    let semid = $("#semid option:selected").text();
-
-    if(studentDB[sid] && studentDB[sid].dob === dob){
-      let student = studentDB[sid];
-      $("#studentName").text(student.name);
-      $("#studentId").text(sid);
-      $("#year").text(year);
-      $("#semester").text(semid);
-
-      let rows = "";
-      student.results.forEach(r=>{
-        rows += `<tr><td>${r.code}</td><td>${r.title}</td><td>${r.grade}</td><td>${r.gpa}</td></tr>`;
-      });
-      $("#resultTable").html(rows);
-      $("#resultCard").slideDown();
-      toastr.success("Result found for Student ID: " + sid);
-    } else {
-      $("#resultCard").hide();
-      toastr.error("Student information not found");
-    }
-  });
-</script> -->
-<!-- <script>
-  $('.form-select').select2();
-  toastr.options = { "closeButton": true, "progressBar": true };
-
-  // Mock Student Database
-  const studentDB = {
-    "2201381015": {
-      name: "Mahabub Alam",
-      dob: "1998-05-06",
-      results: [
-        // 1st Year
-        { code: "CSE101", title: "Introduction to Computer Science", grade: "B", gpa: 3.0 },
-        { code: "MTH101", title: "Calculus & Linear Algebra", grade: "C+", gpa: 2.5 },
-        { code: "PHY101", title: "Physics I", grade: "B-", gpa: 2.75 },
-
-        { code: "CSE102", title: "Structured Programming", grade: "B+", gpa: 3.25 },
-        { code: "MTH102", title: "Differential Equations", grade: "C", gpa: 2.25 },
-        { code: "ENG101", title: "English Composition", grade: "B", gpa: 3.0 },
-
-        // 2nd Year
-        { code: "CSE201", title: "Data Structures", grade: "B+", gpa: 3.25 },
-        { code: "CSE202", title: "Digital Logic Design", grade: "B", gpa: 3.0 },
-        { code: "STA201", title: "Probability & Statistics", grade: "C+", gpa: 2.5 },
-
-        { code: "CSE203", title: "Object-Oriented Programming", grade: "B", gpa: 3.0 },
-        { code: "CSE204", title: "Computer Architecture", grade: "B-", gpa: 2.75 },
-        { code: "ECO201", title: "Economics", grade: "C+", gpa: 2.5 },
-
-        // 3rd Year
-        { code: "CSE301", title: "Algorithm Design & Analysis", grade: "B+", gpa: 3.25 },
-        { code: "CSE302", title: "Operating Systems", grade: "B", gpa: 3.0 },
-        { code: "CSE303", title: "Database Systems", grade: "B-", gpa: 2.75 },
-
-        { code: "CSE304", title: "Software Engineering", grade: "B", gpa: 3.0 },
-        { code: "CSE305", title: "Computer Networks", grade: "C+", gpa: 2.5 },
-        { code: "CSE306", title: "Artificial Intelligence", grade: "B-", gpa: 2.75 },
-
-        // 4th Year
-        { code: "CSE401", title: "Compiler Design", grade: "B", gpa: 3.0 },
-        { code: "CSE402", title: "Machine Learning", grade: "B+", gpa: 3.25 },
-        { code: "CSE403", title: "Web Technologies", grade: "B-", gpa: 2.75 },
-
-        { code: "CSE404", title: "Final Year Project", grade: "B", gpa: 3.0 },
-        { code: "CSE405", title: "Cyber Security", grade: "C+", gpa: 2.5 }
-      ],
-      cgpa: 2.96
-    },
-    "UU5678": {
-      name: "Abdullah Samir",
-      dob: "1999-05-10",
-      results: [
-        { code: "ENG101", title: "English Composition", grade: "A", gpa: 4.0 },
-        { code: "MAT101", title: "Calculus I", grade: "B", gpa: 3.0 }
-      ],
-      cgpa: 3.5
-    }
-  };
-
-  // Form Submit
-  $("#resultForm").on("submit", function(e){
-    e.preventDefault();
-    let sid = $("#sid").val().trim().toUpperCase();
-    let dob = $("#dob").val();
-    let year = $("#acyear option:selected").text(); // fixed
-    let semid = $("#semid option:selected").text();
-
-    if(studentDB[sid] && studentDB[sid].dob === dob){
-      let student = studentDB[sid];
-      $("#studentName").text(student.name);
-      $("#studentId").text(sid);
-      $("#year").text(year);
-      $("#semester").text(semid);
-
-      let rows = "";
-      student.results.forEach(r=>{
-        rows += `<tr><td>${r.code}</td><td>${r.title}</td><td>${r.grade}</td><td>${r.gpa}</td></tr>`;
-      });
-
-      // Add CGPA row
-      if(student.cgpa){
-        rows += `<tr class="table-info">
-                   <td colspan="3" class="text-end"><strong>CGPA</strong></td>
-                   <td><strong>${student.cgpa}</strong></td>
-                 </tr>`;
-      }
-
-      $("#resultTable").html(rows);
-      $("#resultCard").slideDown();
-      toastr.success("Result found for Student ID: " + sid);
-    } else {
-      $("#resultCard").hide();
-      toastr.error("Student information not found");
-    }
-  });
-</script> -->
 <script>
+$(document).ready(function(){
   $('.form-select').select2();
   toastr.options = { "closeButton": true, "progressBar": true };
 
-  // Mock Student Database
   const studentDB = {
     "2201381015": {
       name: "Mahabub Alam",
@@ -375,7 +192,6 @@
     }
   };
 
-  // Form Submit
   $("#resultForm").on("submit", function(e){
     e.preventDefault();
     let sid = $("#sid").val().trim().toUpperCase();
@@ -391,17 +207,13 @@
       $("#semester").text(semid);
 
       let rows = "";
-      // Loop through years
-      for (let yr in student.results){
-        rows += `<tr class="table-secondary">
-                   <td colspan="4"><strong>${yr}</strong></td>
-                 </tr>`;
+      for(let yr in student.results){
+        rows += `<tr class="table-secondary"><td colspan="4"><strong>${yr}</strong></td></tr>`;
         student.results[yr].forEach(r=>{
           rows += `<tr><td>${r.code}</td><td>${r.title}</td><td>${r.grade}</td><td>${r.gpa}</td></tr>`;
         });
       }
 
-      // Add CGPA row
       if(student.cgpa){
         rows += `<tr class="table-info">
                    <td colspan="3" class="text-end"><strong>CGPA</strong></td>
@@ -417,6 +229,7 @@
       toastr.error("Student information not found");
     }
   });
+});
 </script>
 
 </body>
